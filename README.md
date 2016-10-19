@@ -1,25 +1,56 @@
-<p align="center">
-  <a href="http://www.catho.com.br">
-      <img src="http://static.catho.com.br/svg/site/logoCathoB2c.svg" alt="Catho"/>
-  </a>
-</p>
-# backend-test
+Catho test
+==========
 
-Uma pessoa esta a procura de emprego e dentre as várias vagas que existem no mercado (disponibilizadas nesse <a href="https://github.com/catho/backend-test/blob/master/vagas.json">JSON</a>) e ela quer encontrar vagas que estejam de acordo com o que ela saiba fazer, seja direto pelo cargo ou atribuições que podem ser encontradas na descrição das vagas. Para atender essa necessidade precisamos:
+Projeto BackEnd Catho.  
+por: Ramiro Pozzani  
 
-- uma API simples p/ procurar vagas (um GET p/ procurar as vagas no .json disponibilizado);
-- deve ser possível procurar vagas por texto (no atributos title e description);
-- deve ser possível procurar vagas por uma cidade;
-- deve ser possível ordenar o resultado pelo salário (asc e desc);
+Pré requisitos:  
+	Servidor WEB (Windows/Linux) rodando uma versão atualizada (>5) do PHP  
+  
+Geral:  
+	API retorna um Json baseado em filtros que o usuário escolheu  
+	
+Exemplo utilização:  
+	index.php?cidade=S%C3%A3o  
+	index.php?texto=empregada  
+	index.php?texto=analista&cidade=S%C3%A3o  
+	index.php?texto=analista&ordem=asc  
+	  
+	Pode ser testado online em:  
+		http://ramiropo.webfactional.com/catho/index.php?ordem=des  
+		
+Arquivos:  
+	index.php - Adiciona todas as classes e responde com o Json correto  
+	cidade.php - Filtro por cidade  
+	data.php - Classe para fazer o load da data.  
+	filter_int.php - Interface de filtros  
+	functions.php - Funções necessárias para o funcionamento da API  
+	sort.php - Classe que faz a ordenação do Json  
+	texto.php - Classe para busca baseada num texto  
+	/test/CathoTest.php - Classe para os testes unitários utilizando PHPUnit  
+	
+Considerações:  
 
-O teste deve ser feito utilizando PHP (com ou sem framework, a escolha é sua). Esperamos como retorno, fora o GET da API funcionando, os seguintes itens:
-
-- uma explicação do que é necessário para fazer seu projeto funcionar;
-- como executar os testes, se forem testes de unidade melhor ainda;
-- comentários nos códigos para nos explicar o que está sendo feito.
-
-Lembre-se que na hora da avaliação olharemos para:
-
-- organização de código;
-- desempenho;
-- manutenabilidade.
+	Segurança: Filtro nos parametros GET  
+			   Limite para a busca textual com tamanho > 3 .  Evitando que   
+			   um usuário faça consecutivas buscas que retornem um grande número de resultados  
+			   
+	Manutenção: Utilização da interface de busca para criar novos filtros  
+	Json:       Cuidado ao abrir os arquivos desse projeto em editores Windows, pois a formatação  
+				pode ser modificada para UTF com BOM, o que pode gerar um Json inválido como resposta.  
+	
+Testes:  
+	Para rodar os testes unitários é necessário a utilização do framework PHPUnit.  
+	A forma mais simples de instalar o PHPUnit é utilizando o composer.  
+	
+	Instalação composer:  
+		https://jtreminio.com/2013/03/unit-testing-tutorial-introduction-to-phpunit/
+		OBS: Executar os comandos na pasta onde se encontra o arquivo index.php do projeto  
+		
+	Instalação PHPUnit  
+		https://jtreminio.com/2013/03/unit-testing-tutorial-introduction-to-phpunit/  
+		OBS: Os arquivos .xml estão adicionados no pull  
+		
+	Após a instalação basta rodar na pasta root do projeto o comando:  
+		vendor\bin\phpunit    
+	  
